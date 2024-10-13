@@ -65,15 +65,18 @@ buttons.forEach((element) =>{
 
         if(e.target.classList.contains("equals")){
             secondNum = (displayText);
-            if(operator == " / " && secondNum == 0){
-                displayText = "Boang";
-                display.innerHTML = (displayText);
+            if(secondNum){
+                if(operator == " / " && secondNum == 0){
+                    displayText = "Boang";
+                    display.innerHTML = (displayText);
+                }
+                else{
+                    answer = operate(operator, Number(firstNum), Number(secondNum));
+                    displayText = answer;
+                    display.innerHTML = (displayText);
+                }
             }
-            else{
-                answer = operate(operator, Number(firstNum), Number(secondNum));
-                displayText = answer;
-                display.innerHTML = (displayText);
-            }
+            console.log(`${firstNum} ${operator} ${secondNum}`);
         }
 
         if(e.target.classList.contains("operator")){
