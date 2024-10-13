@@ -3,7 +3,7 @@ let displayText = "0";
 let operator;
 let firstNum;
 let secondNum;
-let sum;
+let answer;
 
 function operate(operator, num1, num2){
     switch(operator){
@@ -64,22 +64,39 @@ buttons.forEach((element) =>{
         let target = e.target;
 
         if(e.target.classList.contains("equals")){
-            secondNum = Number(displayText);
-            sum = operate(operator, firstNum, secondNum);
-            displayText = sum;
-            display.innerHTML = (displayText);
+            secondNum = (displayText);
+            if(operator == " / " && secondNum == 0){
+                displayText = "Boang";
+                display.innerHTML = (displayText);
+            }
+            else{
+                answer = operate(operator, Number(firstNum), Number(secondNum));
+                displayText = answer;
+                display.innerHTML = (displayText);
+            }
         }
 
         if(e.target.classList.contains("operator")){
-            if(firstNum == null){
-                firstNum = Number(displayText);
+            if(!firstNum && !secondNum && !operator){
+                if(firstNum == null){
+                    firstNum = (displayText);
+                }
+                else{
+                    secondNum = (displayText);
+                }
+                operator = `${e.target.id}`;
+                displayText = "";
             }
             else{
-                secondNum = Number(displayText);
+                secondNum = (displayText);
+                answer = operate(operator, Number(firstNum), Number(secondNum));
+                firstNum = operate(operator, Number(firstNum), Number(secondNum));
+                secondNum = undefined;
+                operator = `${e.target.id}`;
+                displayText = "";
             }
-            operator = `${e.target.id}`;
-            displayText = "";
-            console.log(operator);
+            console.log(`${firstNum} ${operator} ${secondNum}`);
+
         }
 
         if(e.target.classList.contains("number")){
@@ -90,6 +107,7 @@ buttons.forEach((element) =>{
                 displayText = `${displayText}${e.target.id}`
                 display.innerHTML = (displayText);
             }
+            console.log(`${firstNum} ${operator} ${secondNum}`);
         }
 
         if(e.target.classList.contains("clear")){
